@@ -1,4 +1,4 @@
 config = {
    "username": 'tobkcals',
-   "icon": ":ebolacat:",
+    "icon": ":muscle:",
 }
