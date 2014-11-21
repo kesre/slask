@@ -1,4 +1,4 @@
 config = {
-   "username": 'slask',
-   "icon": ":poop:",
+   "username": 'tobkcals',
+   "icon": ":ebolacat:",
 }
