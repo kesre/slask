@@ -5,7 +5,7 @@ import re
 import requests
 from random import shuffle
 
-def image(searchterm, unsafe=False):
+def image(searchterm, unsafe=True):
     searchterm = quote(searchterm)
 
     safe = "&safe=" if unsafe else "&safe=active"
