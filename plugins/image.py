@@ -3,10 +3,15 @@
 from urllib import quote
 import re
 import requests
-from random import shuffle
+from random import shuffle, randint, choice
 
 def image(searchterm, unsafe=True):
     searchterm = quote(searchterm)
+
+    # There's a chance of pandas today
+    eggs = ['panda']
+    if randint(0, 100) < 10:
+        searchterm += '{} {}'.format(searchterm, choice(eggs))
 
     safe = "&safe=" if unsafe else "&safe=active"
     searchurl = "https://www.google.com/search?tbm=isch&q={0}{1}".format(searchterm, safe)
