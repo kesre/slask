@@ -10,7 +10,7 @@ def image(searchterm, unsafe=True):
 
     # There's a chance of pandas today
     eggs = ['panda']
-    if randint(0, 100) < 50:
+    if randint(0, 100) < 10:
         searchterm = '{} {}'.format(choice(eggs), searchterm)
 
     safe = "&safe=" if unsafe else "&safe=active"
