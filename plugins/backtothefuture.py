@@ -8,7 +8,7 @@ p = parsedatetime.Calendar()
 
 
 def backtothefutureday(datestr):
-    dt = p.parse(datestr)
+    dt = p.parse(datestr)[0]
     return 'http://www.itsbacktothefutureday.com/images/{year}/{month}/{day}.jpg'.format(year=dt.tm_year, month=dt.tm_mon, day=dt.tm_mday)
 
 
