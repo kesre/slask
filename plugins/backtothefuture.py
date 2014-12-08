@@ -12,6 +12,8 @@ def backtothefutureday(datestr):
     if result == 0:
         return "I'm not eating that bogus date."
     if not isinstance(dt, time.struct_time):
+        # For some reason parsedatetime returns a standard tuple instead of
+        # struct_time in certain situations. This rectifies that (or vomits).
         if len(dt) != 9:
             return 'Could not extrapolate date values from parsed date. Your date smells bogus.'
         dt = time.struct_time(dt)
