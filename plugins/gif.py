@@ -5,7 +5,7 @@ import re
 import requests
 from random import randint, choice, shuffle
 
-def gif(searchterm_raw, unsafe=True):
+def gif(searchterm_raw):
 
     # There's a chance of pandas today
     eggs = ['panda', 'dickbutt', 'nickleback']
@@ -13,11 +13,13 @@ def gif(searchterm_raw, unsafe=True):
         searchterm_raw = '{} {}'.format(choice(eggs), searchterm_raw)
 
     # defaults
-    opts = dict(random=10)
+    opts = dict(random=10, safe=True)
 
     # Search for opts in string
     terms = re.split(r'\b(\w+=\w+)\b', searchterm_raw)
     searchterm_raw = terms[0]
+    yes_values = ['yes', 'y', 'true', '1']
+    no_values = ['no', 'n', 'false', '0']
     for term in terms[1:]:
         if '=' not in term:
             continue
@@ -26,10 +28,16 @@ def gif(searchterm_raw, unsafe=True):
         if opt in ['random', 'rand', 'r']:
             if value.isdigit():
                 opts['random'] = int(value)
+        elif opt in ['safe']:
+            if value in yes_values:
+                opts['safe'] = True
+            elif value in no_values:
+                opts['safe'] = False
 
     searchterm = quote(searchterm_raw)
+
     safe = "&safe="
-    if not unsafe:
+    if opts['safe']:
         safe += 'active'
 
     searchurl = "https://www.google.com/search?tbs=itp:animated&tbm=isch&q={0}{1}".format(searchterm, safe)
