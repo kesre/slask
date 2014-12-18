@@ -57,7 +57,7 @@ def gif(searchterm_raw, unsafe=True):
             pass
         opts['index'] += 1
 
-    return "{}\n{}\n{}".format(searchterm_raw, opts, gif)
+    return "{} {}\n{}".format(searchterm_raw, opts, gif)
 
 
 def on_message(msg, server):
