@@ -60,7 +60,15 @@ These are the current default plugins:
 
 ### flip
 
-![](https://raw.githubusercontent.com/llimllib/slask/master/docs/flip.png)
+Different from the llimllib flip, the bot will flip / unflip text
+
+ kesre: !flip me
+ slaskbot (bot): (ノಠ益ಠ)ノ彡 ǝɹsǝʞ
+
+ kesre: !unflip me
+ slaskbot (bot): kesre ノ( º _ ºノ)
+
+ Most text can be flipped. By default (or by specifying 'table'), a table will be flipped.
 
 ---
 
@@ -91,6 +99,17 @@ These are the current default plugins:
 ### map
 
 ![](https://raw.githubusercontent.com/llimllib/slask/master/docs/map.png)
+
+---
+
+### roll
+
+Roll dice, displaying results
+Valid formats:
+!roll - rolls 1 d6
+!roll 5 - rolls 5 d6
+!roll d20 rolls 1 d20
+!roll 5d20 rolls 5 d20
 
 ---
 
