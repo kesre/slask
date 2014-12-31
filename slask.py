@@ -1,51 +1,24 @@
-from glob import glob
-import importlib
 import json
 import logging
 import os
-import re
-import sys
-import traceback
 
 from flask import Flask, request
-app = Flask(__name__)
-
-curdir = os.path.dirname(os.path.abspath(__file__))
-os.chdir(curdir)
+from flask.ext.sqlalchemy import SQLAlchemy
 
 from config import config
 from config import SLACK_CONF_TOKEN
+from config import DATABASE_URL
+from config import DEBUG
+from plugins import hooks
 
 # Defaults to stdout
 logging.basicConfig(level=logging.INFO)
 
 log = logging.getLogger(__name__)
 
-hooks = {}
-def init_plugins():
-    for plugin in glob('plugins/[!_]*.py'):
-        print "plugin: %s" % plugin
-        try:
-            mod = importlib.import_module(plugin.replace(os.path.sep, ".")[:-3])
-            modname = mod.__name__.split('.')[1]
-            for hook in re.findall("on_(\w+)", " ".join(dir(mod))):
-                hookfun = getattr(mod, "on_" + hook)
-                print "attaching %s.%s to %s" % (modname, hookfun, hook)
-                hooks.setdefault(hook, []).append(hookfun)
-
-            if mod.__doc__:
-                firstline = mod.__doc__.split('\n')[0]
-                hooks.setdefault('help', {})[modname] = firstline
-                hooks.setdefault('extendedhelp', {})[modname] = mod.__doc__
-
-        #bare except, because the modules could raise any number of errors
-        #on import, and we want them not to kill our server
-        except:
-            print "import failed on module %s, module not loaded" % plugin
-            print "%s" % sys.exc_info()[0]
-            print "%s" % traceback.format_exc()
-
-init_plugins()
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+db = SQLAlchemy(app)
 
 def run_hook(hook, data, server):
     responses = []
@@ -66,21 +39,30 @@ def log_errors(f):
 @app.route("/", methods=['POST'])
 @log_errors
 def main():
+    if DEBUG:
+        log.info("Received message")
+        log.info("Hooks: {0}".format(hooks))
     username = config.get("username", "slask")
     icon = config.get("icon", ":poop:")
 
     # ignore message we sent
     msguser = request.form.get("user_name", "").strip()
     if username == msguser or msguser.lower() == "slackbot":
+        if DEBUG:
+            log.info("Message was from {0} - ignored.".format(msguser))
         return ""
 
     # verify message actually came from slack
     token = request.form.get("token", "")
     if SLACK_CONF_TOKEN and token != SLACK_CONF_TOKEN:
+        if DEBUG:
+            log.info("Ignored an unverified message.")
         return ""
 
     text = "\n".join(run_hook("message", request.form, {"config": config, "hooks": hooks}))
     if not text:
+        if DEBUG:
+            log.info("No hooks acted.")
         return ""
 
     response = {
@@ -92,4 +74,4 @@ def main():
     return json.dumps(response)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=DEBUG)

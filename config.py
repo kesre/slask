@@ -1,8 +1,9 @@
 import os
 
 config = {
-    "username": 'slaskbot',
+    "username": "slaskbot",
     "icon": ":space_invader:",
 }
-
-SLACK_CONF_TOKEN = os.environ.get('SLACK_CONF_TOKEN')
+DATABASE_URL = os.environ.get("DATABASE_URL")
+DEBUG = True if os.environ.get("DEBUG") == "True" else False
+SLACK_CONF_TOKEN = os.environ.get("SLACK_CONF_TOKEN")
