@@ -1,7 +1,8 @@
 import os
 
 config = {
-    "token": os.environ.get('SLACK_API_TOKEN'),
     "username": 'slaskbot',
-    "icon": ":muscle:",
+    "icon": ":space_invader:",
 }
+
+SLACK_CONF_TOKEN = os.environ.get('SLACK_CONF_TOKEN')

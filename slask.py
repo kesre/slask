@@ -13,6 +13,7 @@ curdir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(curdir)
 
 from config import config
+from config import SLACK_CONF_TOKEN
 
 hooks = {}
 def init_plugins():
@@ -58,8 +59,14 @@ def main():
     if username == msguser or msguser.lower() == "slackbot":
         return ""
 
+    # verify message actually came from slack
+    token = request.form.get("token", "")
+    if SLACK_CONF_TOKEN and token != SLACK_CONF_TOKEN:
+        return ""
+
     text = "\n".join(run_hook("message", request.form, {"config": config, "hooks": hooks}))
-    if not text: return ""
+    if not text:
+        return ""
 
     response = {
         "text": text,
