@@ -57,7 +57,7 @@ def log_errors(f):
         try:
             return f(*args, **kwargs)
         except:
-            log.exception()
+            log.exception("Exception Caught:")
     return wrapped
 
 @app.route("/", methods=['POST'])

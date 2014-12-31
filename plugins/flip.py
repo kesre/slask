@@ -1,16 +1,41 @@
-"""!flip [alpha,beta,gamma] - flip a coin n times or shuffle a comma separated list"""
-import random
+# -*- coding: utf-8 -*-
+"""
+!flip (text) - flip text or table.
+Based on https://github.com/github/hubot-scripts/blob/master/src/scripts/flip.coffee
+Similar license
+"""
 import re
 
-def flip(lst):
-    random.shuffle(lst)
-    return ", ".join(lst)
+from upsidedown import transform
+
+TABLES = [" table", " a table", " the table"]
+
+def replace_me_with_user(text, user_name):
+    if text == " me":
+       return user_name
+    return text
+
+def flip(to_flip):
+    if not to_flip or to_flip in TABLES:
+        flipped = u"┻━┻"
+    else:
+        flipped = transform(to_flip)
+    return u"(ノಠ益ಠ)ノ彡 " + flipped
+
+def unflip(text):
+    if not text or text in TABLES:
+        text = u"┬──┬"
+    return text + u" ノ( º _ ºノ)"
 
 def on_message(msg, server):
     text = msg.get("text", "")
+    user_name = msg.get("user_name", "")
     match = re.findall(r"!flip( .*)?", text)
-    if not match: return
+    if match:
+        return flip(replace_me_with_user(match[0], user_name))
 
-    lst = ["heads", "tails"] if not match[0] else match[0].strip().split(',')
+    match = re.findall(r"!(unflip|putback)( .*)?", text)
+    if match:
+        return unflip(replace_me_with_user(match[0][1], user_name))
 
-    return flip(lst)
+    return ""

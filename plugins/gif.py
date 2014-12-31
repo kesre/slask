@@ -8,7 +8,7 @@ from random import randint, choice, shuffle
 def gif(searchterm_raw):
 
     # There's a chance of pandas today
-    eggs = ['panda', 'dickbutt', 'nickleback']
+    eggs = ['panda', 'nick cage']
     if randint(0, 100) < 10:
         searchterm_raw = '{} {}'.format(choice(eggs), searchterm_raw)
 
