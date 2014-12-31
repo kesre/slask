@@ -16,9 +16,6 @@ os.chdir(curdir)
 from config import config
 from config import SLACK_CONF_TOKEN
 
-# Defaults to stdout
-logging.basicConfig(level=logging.INFO)
-
 log = logging.getLogger(__name__)
 
 hooks = {}
