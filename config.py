@@ -1,4 +1,7 @@
+import os
+
 config = {
-    "username": 'tobkcals',
+    "token": os.environ.get('SLACK_API_TOKEN'),
+    "username": 'slaskbot',
     "icon": ":muscle:",
 }
