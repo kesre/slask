@@ -1,6 +1,7 @@
 from glob import glob
 import importlib
 import json
+import logging
 import os
 import re
 import sys
@@ -14,6 +15,11 @@ os.chdir(curdir)
 
 from config import config
 from config import SLACK_CONF_TOKEN
+
+# Defaults to stdout
+logging.basicConfig(level=logging.INFO)
+
+log = logging.getLogger(__name__)
 
 hooks = {}
 def init_plugins():
@@ -49,7 +55,16 @@ def run_hook(hook, data, server):
 
     return responses
 
+def log_errors(f):
+    def wrapped(*args, **kwargs):
+        try:
+            return f(*args, **kwargs)
+        except:
+            log.exception()
+    return wrapped
+
 @app.route("/", methods=['POST'])
+@log_errors
 def main():
     username = config.get("username", "slask")
     icon = config.get("icon", ":poop:")
