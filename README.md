@@ -130,8 +130,8 @@ Usage:
 
 ### roll
 
-Roll dice, displaying results
-Valid formats:
+Roll dice, displaying results.
+
 ```
 !roll # rolls 1 d6
 !roll 5 # rolls 5 d6
