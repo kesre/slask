@@ -6,8 +6,11 @@ from flask import Flask, request
 
 from config import config
 from config import SLACK_CONF_TOKEN
+from config import CHANNEL_MOD_MAP
+from config import CHANNEL_MOD_OPT_IN
 from config import DATABASE_URL
 from config import DEBUG
+import constants
 
 # Defaults to stdout
 logging.basicConfig(level=logging.INFO)
@@ -20,13 +23,23 @@ app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 # XXX: plugins need db to run, which needs app defined.
 from plugins import hooks
 
-def run_hook(hook, data, server):
+def run_hooks(protocol, data, server):
     responses = []
-    for hook in hooks.get(hook, []):
+    protocol_hooks = hooks.get(protocol, [])
+    for hook in get_channel_hooks(protocol_hooks, server["channel"]):
         h = hook(data, server)
         if h: responses.append(h)
 
     return responses
+
+def get_channel_hooks(hooks, channel):
+    """Because not everyone wants ALL the hooks ALL the time."""
+    if channel in CHANNEL_MOD_MAP:
+        mods = CHANNEL_MOD_MAP[channel]
+        if mods == constants.CHANNEL_MOD_ALL:
+            return hooks.itervalues()
+        return [hooks[mod] for mod in mods]
+    return hooks.itervalues() if not CHANNEL_MOD_OPT_IN else []
 
 def log_errors(f):
     def wrapped(*args, **kwargs):
@@ -41,13 +54,13 @@ def log_errors(f):
 def main():
     if DEBUG:
         log.info("Received message")
-        log.info("Hooks: {0}".format(hooks))
-    username = config.get("username", "slask")
-    icon = config.get("icon", ":poop:")
+        log.info("Hooks: {0}".format(hooks.keys()))
+    username = config.get("username", constants.DEFAULT_BOT_NAME)
+    icon = config.get("icon", constants.DEFAULT_BOT_ICON)
 
     # ignore message we sent
     msguser = request.form.get("user_name", "").strip()
-    if username == msguser or msguser.lower() == "slackbot":
+    if username == msguser or msguser.lower() == constants.SLACKBOT_NAME:
         if DEBUG:
             log.info("Message was from {0} - ignored.".format(msguser))
         return ""
@@ -59,7 +72,8 @@ def main():
             log.info("Ignored an unverified message.")
         return ""
 
-    text = "\n".join(run_hook("message", request.form, {"config": config, "hooks": hooks}))
+    channel = request.form.get("channel_name", "")
+    text = "\n".join(run_hooks("message", request.form, {"config": config, "hooks": hooks, "channel": channel}))
     if not text:
         if DEBUG:
             log.info("No hooks acted.")

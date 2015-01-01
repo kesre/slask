@@ -19,7 +19,7 @@ def init_plugins():
             for hook in re.findall("on_(\w+)", " ".join(dir(mod))):
                 hookfun = getattr(mod, "on_" + hook)
                 print "attaching %s.%s to %s" % (modname, hookfun, hook)
-                hooks.setdefault(hook, []).append(hookfun)
+                hooks.setdefault(hook, {})[modname] = hookfun
 
             if mod.__doc__:
                 firstline = mod.__doc__.split('\n')[0]
