@@ -3,13 +3,11 @@ import logging
 import os
 
 from flask import Flask, request
-from flask.ext.sqlalchemy import SQLAlchemy
 
 from config import config
 from config import SLACK_CONF_TOKEN
 from config import DATABASE_URL
 from config import DEBUG
-from plugins import hooks
 
 # Defaults to stdout
 logging.basicConfig(level=logging.INFO)
@@ -18,7 +16,9 @@ log = logging.getLogger(__name__)
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
-db = SQLAlchemy(app)
+
+# XXX: plugins need db to run, which needs app defined.
+from plugins import hooks
 
 def run_hook(hook, data, server):
     responses = []

@@ -1,0 +1,10 @@
+# Run by installing https://devcenter.heroku.com/articles/heroku-postgresql#local-setup, 
+# adding install director to PATH, then using heroku pg:psql to connect.
+
+CREATE EXTENSION citext;
+
+CREATE TABLE karma(
+    id     serial PRIMARY KEY,
+    name citext UNIQUE NOT NULL,
+    value  integer NOT NULL DEFAULT 0
+);
