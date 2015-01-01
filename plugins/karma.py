@@ -1,7 +1,8 @@
+"""!karma | !karma <name> | !<name>++ | !<name>-- - Modify or view karma."""
 import re
 
 from core.db import db
-from core.models.karma import Karma
+from models.karma import Karma
 
 def update_karma(name, op):
     karma = db.session.query(Karma).filter_by(

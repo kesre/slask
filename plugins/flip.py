@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-!flip (text) - flip text or table.
+"""!flip [<text>] - flip text or table.
 Based on https://github.com/github/hubot-scripts/blob/master/src/scripts/flip.coffee
 Similar license
 """

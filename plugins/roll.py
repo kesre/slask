@@ -1,4 +1,4 @@
-"""!roll [number]d(size). eg 1d6 or d20. Roll dice. Defaults to 1d6"""
+"""!roll [<number>][d<size>]. eg 1d6 or d20. Roll dice. Defaults to 1d6"""
 import random
 import re
 

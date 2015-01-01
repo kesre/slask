@@ -61,13 +61,13 @@ These are the current default plugins:
 ### flip
 
 Different from the llimllib flip, the bot will flip / unflip text
-
+```
  kesre: !flip me
  slaskbot (bot): (ノಠ益ಠ)ノ彡 ǝɹsǝʞ
 
  kesre: !unflip me
  slaskbot (bot): kesre ノ( º _ ºノ)
-
+```
  Most text can be flipped. By default (or by specifying 'table'), a table will be flipped.
 
 ---
@@ -96,6 +96,32 @@ Different from the llimllib flip, the bot will flip / unflip text
 
 ---
 
+### karma
+Modify or view the karma of a thing. Relies on other commands
+using a space after the command to avoid hook collisions.
+
+Usage:
+```
+!<name>++
+!<name>--
+!karma <name>
+!karma
+```
+
+```
+ kesre: !karma chameleon
+ slaskbot (bot): No karma for chameleon
+ kesre: !chameleon++
+ slaskbot (bot): chameleon: 1
+ kesre: !karma chameleon
+ slaskbot (bot): chameleon: 1
+ kesre: !karma
+ slaskbot (bot): Best Karma: chameleon: 1 Worst Karma:
+
+```
+
+---
+
 ### map
 
 ![](https://raw.githubusercontent.com/llimllib/slask/master/docs/map.png)
@@ -106,11 +132,12 @@ Different from the llimllib flip, the bot will flip / unflip text
 
 Roll dice, displaying results
 Valid formats:
-!roll - rolls 1 d6
-!roll 5 - rolls 5 d6
-!roll d20 rolls 1 d20
-!roll 5d20 rolls 5 d20
-
+```
+!roll # rolls 1 d6
+!roll 5 # rolls 5 d6
+!roll d20 # rolls 1 d20
+!roll 5d20 # rolls 5 d20
+```
 ---
 
 ### stock
