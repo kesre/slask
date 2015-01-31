@@ -88,6 +88,17 @@ Different from the llimllib flip, the bot will flip / unflip text
 
 ---
 
+### hash
+
+Calculate the md5 sum of passed-in text.
+
+```
+jthemphill: !md5 test
+slaskbot (bot): 098f6bcd4621d373cade4e832627b4f6
+```
+
+---
+
 ### help
 
 ![](https://raw.githubusercontent.com/llimllib/slask/master/docs/help.png)
@@ -189,6 +200,7 @@ Roll dice, displaying results.
 
 * @kesre
 * @joshshadowfax
+* @jthemphill
 
 ## Pre-fork Contributors
 
