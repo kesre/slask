@@ -39,7 +39,6 @@ These are the current default plugins:
 
 * [calc](https://github.com/llimllib/slask#calc)
 * [emoji](https://github.com/llimllib/slask#emoji)
-* [flip](https://github.com/llimllib/slask#flip)
 * [gif](https://github.com/llimllib/slask#gif)
 * [google](https://github.com/llimllib/slask#google-or-search)
 * [help](https://github.com/llimllib/slask#help)
@@ -122,7 +121,17 @@ Usage:
  slaskbot (bot): chameleon: 1
  kesre: !karma
  slaskbot (bot): Best Karma: chameleon: 1 Worst Karma:
+```
 
+---
+
+### magic
+
+Given a search term, returns the url for any magic cards found that match the term.
+
+```
+joshshadowfax: !magic hymn to tourach
+slaskbot (bot): https://image.deckbrew.com/mtg/multiverseid/373324.jpg
 ```
 
 ---
@@ -143,6 +152,7 @@ Roll dice, displaying results.
 !roll d20 # rolls 1 d20
 !roll 5d20 # rolls 5 d20
 ```
+
 ---
 
 ### stock
@@ -178,6 +188,7 @@ Roll dice, displaying results.
 ## Contributors
 
 * @kesre
+* @joshshadowfax
 
 ## Pre-fork Contributors
 
