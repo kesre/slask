@@ -16,8 +16,6 @@ def magic(searchterm):
     if not results:
         return "no cards found"
 
-    edition = {}
-
     for card in results:
         if searchterm.lower() == card["name"].lower():
             #exact match found, pick a random edition with valid image
