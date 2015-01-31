@@ -20,24 +20,20 @@ def update_karma(name, op):
     db.session.commit()
     return str(karma)
 
-def get_highscores(top=True):
-    if top:
-        order = Karma.value.desc()
-    else:
-        order = Karma.value
-    return [
-        str(entry) 
-        for entry in db.session.query(Karma).order_by(order).limit(5).all()
-    ]
+def get_highscores():
+    return db.session.query(Karma).order_by(Karma.value.desc()).limit(5).all()
+
+def get_lowscores():
+    return db.session.query(Karma).filter(
+        ~Karma.id.in_([entry.id for entry in get_highscores()])
+    ).order_by(Karma.value).limit(5).all()
 
 def get_karma(text):
     if not text:
-        high = set(get_highscores())
-        low = set(get_highscores(top=False)) - high
         return "Best Karma: " + ", ".join(
-            high
+            [str(entry) for entry in get_highscores()]
         ) + " Worst Karma: " + ", ".join(
-            low
+            [str(entry) for entry in get_lowscores()]
         )
     else:
         # If there is a word, there had to be space in front.
