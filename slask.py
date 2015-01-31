@@ -5,7 +5,7 @@ import os
 from flask import Flask, request
 
 from config import config
-from config import SLACK_CONF_TOKEN
+from config import SLACK_CONF_TOKENS
 from config import CHANNEL_MOD_MAP
 from config import CHANNEL_MOD_OPT_IN
 from config import DATABASE_URL
@@ -67,24 +67,25 @@ def main():
 
     # verify message actually came from slack
     token = request.form.get("token", "")
-    if SLACK_CONF_TOKEN and token != SLACK_CONF_TOKEN:
-        if DEBUG:
-            log.info("Ignored an unverified message.")
+    if SLACK_CONF_TOKENS and token not in SLACK_CONF_TOKENS:
+        log.info("Ignored an unverified message.")
         return ""
 
     channel = request.form.get("channel_name", "")
     text = "\n".join(run_hooks("message", request.form, {"config": config, "hooks": hooks, "channel": channel}))
     if not text:
-        if DEBUG:
-            log.info("No hooks acted.")
+        log.info("No hooks acted.")
         return ""
 
-    response = {
-        "text": text,
-        "username": username,
-        "icon_emoji": icon,
-        "parse": "full",
-    }
+    if request.form.get("command"):
+        response = text
+    else:
+        response = {
+            "text": text,
+            "username": username,
+            "icon_emoji": icon,
+            "parse": "full",
+        }
     return json.dumps(response)
 
 if __name__ == "__main__":
