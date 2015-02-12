@@ -145,6 +145,13 @@ joshshadowfax: !magic hymn to tourach
 slaskbot (bot): https://image.deckbrew.com/mtg/multiverseid/373324.jpg
 ```
 
+Inline references can be used
+
+```
+joshshadowfax: Hey, check out !magic second sunrise! Good night sweet prince :D 
+slaskbot (bot): https://image.deckbrew.com/mtg/multiverseid/49009.jpg
+``` 
+
 ---
 
 ### map
