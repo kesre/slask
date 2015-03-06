@@ -10,7 +10,6 @@ def magic(searchterm):
     quotedsearchterm = quote(searchterm)
     url = "https://api.deckbrew.com/mtg/cards?name={}"
     url = url.format(quotedsearchterm)
-
     results = requests.get(url).json()
 
     if not results:
@@ -22,6 +21,18 @@ def magic(searchterm):
             return getimage(card)
         
     #no exact match found, pick a random card from the matches
+    card = random.choice(results)
+    return getimage(card)
+
+def cardname(searchterm):
+    quotedsearchterm = quote(searchterm)
+    url = "https://api.deckbrew.com/mtg/cards?name={}"
+    url = url.format(quotedsearchterm)
+    return magic(url)
+
+def general():
+    url = "https://api.deckbrew.com/mtg/cards?supertype=legendary&type=creature"
+    results = requests.get(url).json()
     card = random.choice(results)
     return getimage(card)
 
@@ -38,7 +49,11 @@ def hasimage(url):
 def on_message(msg, server):
     text = msg.get("text", "")
     match = re.findall(r"!magic ([^!]*)", text)
-    if not match: return
+    if not match:
+        return
 
     searchterm = match[0]
+    generalmatch = re.findall(r"&general", searchterm)
+    if generalmatch:
+        return general()
     return magic(searchterm)

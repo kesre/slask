@@ -1,4 +1,4 @@
-# Slask
+﻿# Slask
 ### A [Slack](https://slack.com/) chatbot
 
 ## Installation
@@ -151,6 +151,13 @@ Inline references can be used
 joshshadowfax: Hey, check out !magic second sunrise! Good night sweet prince :D 
 slaskbot (bot): https://image.deckbrew.com/mtg/multiverseid/49009.jpg
 ``` 
+
+Looking for a new EDH General? Use &general
+
+```
+joshshadowfax: Challenge: Build a deck with !magic &general.
+slaskbot (bot): https://image.deckbrew.com/mtg/multiverseid/113512.jpg
+```
 
 ---
 
