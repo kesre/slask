@@ -53,7 +53,7 @@ def on_message(msg, server):
         return
 
     searchterm = match[0]
-    generalmatch = re.findall(r"+general", searchterm)
+    generalmatch = re.findall(r"\+general", searchterm)
     if generalmatch:
         return general()
     return magic(searchterm)
