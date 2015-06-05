@@ -152,6 +152,26 @@ joshshadowfax: Hey, check out !magic second sunrise! Good night sweet prince :D
 slaskbot (bot): https://image.deckbrew.com/mtg/multiverseid/49009.jpg
 ``` 
 
+Want to do an advanced search?  Search with any of the following terms in the form +term <value>.  You can use more than one value in a search.
+Valid filters:
+type: Filter by specified card type (e.g. creature)
+supertype: Filer by specified supertype (e.g. legendary)
+subtype: Filter by specified subtype (e.g. elf)
+name: Return cards which contain input in name
+oracle: Return cards which contain input in oracle text
+set: Return cards from specified set using 3-letter identifier (e.g. WWK)
+rarity: Filter by card rarity
+color: Filter by specified color
+multiverseid: Find card with specified Multiverse card ID
+format: Filters cards by specified format (Vintage, Legacy, Modern, Standard, Commander)
+status: Filters by cards with specified status (Legal, Banned, Restricted)
+multicolor: Whether to only show multicolored cards (True, False)
+
+```
+joshshadowfax: I want a card like lightning bolt.  !magic +color red +oracle 3 damage +rarity common!
+slaskbot (bot): https://image.deckbrew.com/mtg/multiverseid/50292.jpg
+```
+
 Looking for a new EDH General? Use +general
 
 ```
